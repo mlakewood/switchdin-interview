@@ -1,0 +1,16 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto
+    volumes:
+      - ./conf/docker:/mosquitto/conf
+      - ./data:/mosquitto/data
+      - ./log:/mosquitto/log
+  generator:
+    build: .
+    command: /home/switchdin/src/generator.py
+  aggregator:
+    build: .
+    command: /home/switchdin/src/aggregator.py
+  reporter:
+    build: .
+    command: /home/switchdin/src/reporter.py
