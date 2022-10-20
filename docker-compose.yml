@@ -1,16 +1,25 @@
 services:
   mosquitto:
-    image: eclipse-mosquitto
+    image: eclipse-mosquitto:2.0
     volumes:
-      - ./conf/docker:/mosquitto/conf
+      - ./conf/docker/mosquitto.conf:/mosquitto/config/mosquitto.conf
       - ./data:/mosquitto/data
       - ./log:/mosquitto/log
+    ports:
+      - 1883:1883
+      - 9001:9001
   generator:
     build: .
-    command: /home/switchdin/src/generator.py
+    command: python /home/switchdin/src/generator.py
+    volumes:
+      - ./src:/home/switchdin/src
   aggregator:
     build: .
-    command: /home/switchdin/src/aggregator.py
+    command: python /home/switchdin/src/aggregator.py
+    volumes:
+      - ./src:/home/switchdin/src
   reporter:
     build: .
-    command: /home/switchdin/src/reporter.py
+    command: python /home/switchdin/src/reporter.py
+    volumes:
+      - ./src:/home/switchdin/src
