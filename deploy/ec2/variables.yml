@@ -1,0 +1,7 @@
+---
+# Static hard-coded variables (change these as needed)
+app_name: switchdin-interview # Can be changed if using with a different app
+docker_repo: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/switchdin-test # Docker Hub repository
+ami_image: ami-07b0ce310e84cef84
+subnet: subnet-0736b9812f65d19a0
+ansible_ssh_private_key_file: /Users/mlakewood/projects/switchdin/switchdin.cer

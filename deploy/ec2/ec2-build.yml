@@ -1,0 +1,45 @@
+---
+- name: Configure EC2 instance
+  hosts: switchdin
+  connection: ssh
+  tasks:
+  - name: Update the machine
+    command: sudo apt-get clean && update -y
+    
+  - name: Installing essentials
+    command: sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y
+    
+  - name: Installing Curl
+    command: sudo apt-get install curl -y
+
+  - name: copy compose file     
+    ansible.builtin.copy:
+      src: /Users/mlakewood/projects/switchdin/deploy/ec2/docker-compose.yml
+      dest: /home/ubuntu/docker-compose.yml
+      owner: ubuntu
+      group: ubuntu
+      mode: '0400'
+  - name: copy mosquitto file
+    ansible.builtin.copy:
+      src: /Users/mlakewood/projects/switchdin/conf/docker/mosquitto.conf
+      dest: /home/ubuntu/mosquitto.conf
+      owner: ubuntu
+      group: ubuntu
+      mode: '0400'
+
+  - name: Installing docker-compose
+    become: yes
+    command: curl -SL https://github.com/docker/compose/releases/download/v2.12.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+
+  - name: make it executable
+    become: yes
+    command: chmod +x /usr/local/bin/docker-compose
+
+  - name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
+    become: yes
+    ansible.builtin.user:
+      name: andre
+      comment: Andre
+      uid: 1040
+      group: admin
+      shell: /bin/bash

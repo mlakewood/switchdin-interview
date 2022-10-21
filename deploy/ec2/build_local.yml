@@ -1,0 +1,19 @@
+---
+- name: Build Docker image locally
+  hosts: localhost
+  connection: local
+  tasks:
+
+  - name: Import variables
+    include_vars: variables.yml
+
+  - name: Build Docker image and push to ECR repo
+    docker_image:
+      build:
+        path: /Users/mlakewood/projects/switchdin
+      name: "{{ docker_repo }}/{{ app_name }}"
+      repository: "{{ docker_repo }}"
+      tag: "0.1"
+      push: yes
+      source: build
+      force_source: yes

@@ -1,0 +1,18 @@
+---
+- name: Configure EC2 instance
+  hosts: localhost
+
+  tasks:
+    - name: Import variables
+      include_vars: variables.yml
+    - name: Create Ec2 instance
+      amazon.aws.ec2_instance:
+        name: "switchdin-interview"
+        key_name: "switchdin"
+        vpc_subnet_id: "{{ subnet }}"
+        instance_type: t3.large
+        security_group: default
+        network:
+          assign_public_ip: true
+        image_id: "{{ ami_image }}"
+        instance_role: arn:aws:iam::220445851985:instance-profile/switchdin

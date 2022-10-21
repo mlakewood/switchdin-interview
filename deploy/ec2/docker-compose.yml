@@ -1,0 +1,19 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    volumes:
+      - /home/ubuntu/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - /home/ubuntu/data:/mosquitto/data
+      - /home/ubuntu/log:/mosquitto/log
+    ports:
+      - 1883:1883
+      - 9001:9001
+  generator:
+    image: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/switchdin-test:0.1
+    command: python /home/switchdin/src/generator.py
+  aggregator:
+    image: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/switchdin-test:0.1
+    command: python /home/switchdin/src/aggregator.py
+  reporter:
+    image: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/switchdin-test:0.1
+    command: python /home/switchdin/src/reporter.py
