@@ -36,3 +36,6 @@ I do have some of the spin up of the ec2 instance automated through Ansible, but
 
 As I was reading the paho docs I noticed that there was a lot of tuning that could be done to the client (and likely the broker). In a real application taking notice of these settings is imperative as well as the semantics of the storage tech/queue mechanism. However in this instance I have ignored almost all of them.
 
+6. Message Schemas
+
+One thing that I would implement in any messaging system like this one is strict schemas for the messages. I kinda did this through using contstants for keys in a shared module here, but this isnt really sufficient. Having schemas, and particularly versioned schemas with ways to migrate and thinking about the implications up front, is critical for these kinds of systems.
